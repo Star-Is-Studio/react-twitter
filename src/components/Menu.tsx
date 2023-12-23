@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { FaHouse } from "react-icons/fa6";
 import { IoLogOut, IoLogIn } from "react-icons/io5";
 import { FaCircleUser } from "react-icons/fa6";
+import { AiOutlineSearch } from "react-icons/ai";
 import { useContext } from "react";
 import AuthContext from "context/AuthContext";
 import { getAuth, signOut } from "firebase/auth";
@@ -21,6 +22,10 @@ export default function MenuList() {
         <button type="button" onClick={() => navigate("/profile")}>
           <FaCircleUser />
           Profile
+        </button>
+        <button type="button" onClick={() => navigate("/search")}>
+          <AiOutlineSearch />
+          Search
         </button>
         {user === null ? (
           <button type="button" onClick={() => navigate("/users/login")}>

@@ -8,6 +8,9 @@ import AuthContext from "context/AuthContext";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "firebaseApp";
 import { toast } from "react-toastify";
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import { storage } from "firebaseApp";
+import { error } from "console";
 
 interface PostBoxProps {
   post: PostProps;
@@ -15,11 +18,21 @@ interface PostBoxProps {
 
 export default function PostBox({ post }: PostBoxProps) {
   const { user } = useContext(AuthContext);
+  const imgaeRef = ref(storage, post?.imageUrl);
+
   const navigate = useNavigate();
+
   const handleDelete = async () => {
     const confirm = window.confirm("해당 게시글을 삭제하시겠습니까?");
     if (confirm) {
       await deleteDoc(doc(db, "posts", post.id));
+      //스토리지 이미지 삭제
+      if (post?.imageUrl) {
+        deleteObject(imgaeRef).catch((error) => {
+          console.log(error);
+        });
+      }
+
       toast.success("게시글을 삭제했습니다.");
       navigate("/");
     }
@@ -42,6 +55,17 @@ export default function PostBox({ post }: PostBoxProps) {
             <div className="post__createdAt">{post?.createdAt}</div>
           </div>
           <div className="post__box-content">{post?.content}</div>
+          {post?.imageUrl && (
+            <div className="post__image-div">
+              <img
+                src={post?.imageUrl}
+                alt="post img"
+                className="post__image"
+                width={100}
+                height={100}
+              />
+            </div>
+          )}
           <div className="post-form__hashtags-outputs">
             {post?.hashTags?.map((tag, index) => (
               <span className="post-form__hashtags-tag" key={index}>

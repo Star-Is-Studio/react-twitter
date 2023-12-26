@@ -37,6 +37,7 @@ export default function PostForm() {
     const key = `${user?.uid}/${uuidv4()}`;
     const storageRef = ref(storage, key);
     setIsSubmitting(true);
+    console.log(isSubmitting);
     try {
       //이미지 먼저 업로드
       let imageUrl = "";
@@ -64,6 +65,7 @@ export default function PostForm() {
       setImageFile(null);
       toast.success("글 등록이 완료되었습니다.");
       setIsSubmitting(false);
+      console.log(isSubmitting);
     } catch (e: any) {
       console.log(e);
     }

@@ -135,7 +135,7 @@ export default function LoginForm() {
           className="form__btn--google"
           onClick={onClickSocialLogin}
         >
-          Google로 로그인
+          Google로 로그인(크롬브라우저에서만 사용가능합니다.)
         </button>
       </div>
       <div className="form__block--lg">
